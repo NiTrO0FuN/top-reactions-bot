@@ -25,6 +25,20 @@
             "en-US": "The podium has been created in {channel} ✨!",
             "fr": "Le podium a été créé dans {channel} ✨!"}
     },
+    "remove_podium": {
+        "description": {
+            "en-US": "Remove the reaction podium",
+            "fr": "Retire le podium de réaction"
+        },
+        "no_podium": {
+            "en-US": "There is no podium to remove 🤔! Use /podium-create to create one!",
+            "fr": "Il n'y a pas de podium à retirer 🤔 ! Utilises /podium-create pour en créer un !"
+        },
+        "success": {
+            "en-US": "The podium was successfully deleted 🚮.",
+            "fr": "Le podium a été supprimé avec succès 🚮."
+        }
+    },
     "podium": {
         "title": {
             "en-US": "Podium",

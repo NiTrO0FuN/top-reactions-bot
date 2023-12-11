@@ -184,7 +184,7 @@ async def on_raw_reaction_remove(reaction: discord.RawReactionActionEvent):
     await process_raw_reaction(reaction)
 
 # Commands
-@bot.slash_command(name = "podium", description_localizations = loc["create_podium"]["description"])
+@bot.slash_command(name = "podium-create", description_localizations = loc["create_podium"]["description"])
 @discord.option("size",name_localizations=loc["create_podium"]["option"]["name"],
                 description_localizations=loc["create_podium"]["option"]["description"],
                 min_value=1,max_value=10, default=3)
@@ -218,5 +218,20 @@ async def set_podium(ctx: discord.ApplicationContext, size: int):
     await ctx.respond(responses.get(str(ctx.interaction.locale), responses["en-US"])
                       .format(channel= ctx.channel.mention))
 
+@bot.slash_command(name = "podium-remove", description_localizations = loc["remove_podium"]["description"])
+async def remove_podium(ctx: discord.ApplicationContext):
+    if not ctx.channel or not ctx.guild_id:
+        return
+    
+    if not podium_location[ctx.guild_id]:
+        responses = loc["remove_podium"]["no_podium"]
+        await ctx.respond(responses.get(str(ctx.interaction.locale), responses["en-US"]))
+        return
+
+
+    await podium_location[ctx.guild_id].delete()
+    db.remove_guild(ctx.guild_id)
+    responses = loc["remove_podium"]["success"]
+    await ctx.respond(responses.get(str(ctx.interaction.locale), responses["en-US"]))
 
 bot.run(TOKEN)
