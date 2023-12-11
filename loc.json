@@ -1,0 +1,42 @@
+{
+    "create_podium": {
+        "description": {
+            "en-US": "Create the reaction podium, the podium will appear in this channel",
+            "fr": "Crée le podium de réaction, celui-ci sera créé dans ce channel"
+        },
+        "option" : {
+            "name": {
+                "en-US": "size",
+                "fr": "taille"
+            },
+            "description" : {
+                "en-US": "Podium size",
+                "fr": "Taille du podim"
+            }
+        },
+        "channel_error": {
+            "en-US": "It's not possible to create a podium in this channel 😥!",
+            "fr": "Il est impossible de créer le podium dans ce channel 😥 !"},
+        "already_exists": {
+            "en-US": "The podium is already created in {channel}",
+            "fr": "Le podium est déjà créé dans {channel}"
+        },
+        "success" : {
+            "en-US": "The podium has been created in {channel} ✨!",
+            "fr": "Le podium a été créé dans {channel} ✨!"}
+    },
+    "podium": {
+        "title": {
+            "en-US": "Podium",
+            "fr": "Podium"
+        },
+        "description": {
+            "en-US": "This is the podium of the most reacted message on the server 🏆!",
+            "fr": "Voici le podium des messages avec le plus de réactions sur le serveur 🏆 !"
+        },
+        "empty": {
+            "en-US": "No message",
+            "fr": "Aucun message"
+        }
+    }
+}

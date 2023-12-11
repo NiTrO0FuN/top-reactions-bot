@@ -1,0 +1,28 @@
+# dotenv
+.env
+
+# virtualenv
+.venv
+
+# VSCode
+.vscode/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Logfiles
+log.*
+*.log.*
+!log.py
+
+# Database
+*.db
+
+# Custom user configuration
+*config.yml
+
+# Mac OS .DS_Store, which is a file that stores custom attributes of its containing folder
+.DS_Store
+*.env*
