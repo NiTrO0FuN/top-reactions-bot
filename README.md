@@ -3,6 +3,8 @@
 
 Discord bot that ranks top reacted messages on a podium 🏆 ! 
 
+Official invite link: [Invite](https://discord.com/api/oauth2/authorize?client_id=1183036134792638494&permissions=277025614912&scope=bot) 
+
 
 ## Environment Variables
 
