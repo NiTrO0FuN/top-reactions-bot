@@ -62,7 +62,11 @@ async def fetch_message(guild_id: int, channel_id: int, message_id: int) -> disc
     if not channel or not isinstance(channel, discord.TextChannel):
         return
     
-    message = await channel.fetch_message(message_id)
+    message = None
+    try:
+        message = await channel.fetch_message(message_id)
+    except:
+        pass
 
     return message
 
@@ -113,6 +117,7 @@ async def check_podium(guild_id: int, message: discord.Message):
     podium = podiums[guild_id]
 
     for place in podium:
+        #Check if message already in podium
         if place["message_id"] == message.id:
             if reaction_nbr == 0:
                 place["message_id"], place["channel_id"], place["reaction_nbr"] = None, None, None
@@ -168,12 +173,21 @@ async def update_podium_message(guild_id: int, message: discord.Message):
                 m = await fetch_message(guild_id, place["channel_id"], place["message_id"])
                 if m:
                     value = m.content
+                else:
+                    #Message does not exist anymore
+                    place["channel_id"], place["message_id"], place["reaction_nbr"] = None, None, 0
+                    db.save_guild_podium_rank(guild_id, place["channel_id"], place["message_id"], i, 0)
             embed["fields"][i]["value"] = value
         except:
             pass
 
     embed = discord.Embed.from_dict(embed)
-    await message.edit(embed=embed)
+    
+    try:
+        await message.edit(embed=embed)
+    except:
+        db.remove_guild(guild_id)
+        await load_guild_in_memory(guild_id)
     
 
 
