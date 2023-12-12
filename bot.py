@@ -115,6 +115,9 @@ async def check_podium(guild_id: int, message: discord.Message):
             save_all_podium(guild_id)
             return
     
+    if reaction_nbr == 0:
+        return #Not interested
+    
     for i in range(len(podium)-1,-1,-1):
         i_reaction_number =  podium[i]["reaction_nbr"]
         if i_reaction_number is None:
