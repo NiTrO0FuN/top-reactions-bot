@@ -30,6 +30,9 @@ podium_location: dict[int, discord.Message] = {}
 # Helper
 async def load_guild_in_memory(guild_id: int):
     podium: list[dict[str,int | None]] = []
+    if guild_id in podium_location:
+        del podium_location[guild_id]
+
     for place in db.get_guild_podium(guild_id):
         podium.append({"message_id": place[0], "channel_id": place[1], "reaction_nbr": place[2]})
     podiums[guild_id] = podium
@@ -43,7 +46,12 @@ async def load_guild_in_memory(guild_id: int):
     if not channel or not isinstance(channel, discord.TextChannel):
         return
     
-    podium_location[guild_id] = await channel.fetch_message(message_id)
+    try:
+        podium_location[guild_id] = await channel.fetch_message(message_id)
+    except:
+        #Podim manually deleted
+        podiums[guild_id] = []
+        db.remove_guild(guild_id)
 
 async def fetch_message(guild_id: int, channel_id: int, message_id: int) -> discord.Message | None:
     guild = bot.get_guild(guild_id)
@@ -239,14 +247,19 @@ async def remove_podium(ctx: discord.ApplicationContext):
     if not ctx.channel or not ctx.guild_id:
         return
     
-    if not podium_location[ctx.guild_id]:
+    if ctx.guild_id not in podium_location:
         responses = loc["remove_podium"]["no_podium"]
         await ctx.respond(responses.get(str(ctx.interaction.locale), responses["en-US"]))
         return
 
+    try:
+        await podium_location[ctx.guild_id].delete()
+    except:
+        pass
+        # Podium might already have been manually remove_podium
 
-    await podium_location[ctx.guild_id].delete()
     db.remove_guild(ctx.guild_id)
+    await load_guild_in_memory(ctx.guild_id)
     responses = loc["remove_podium"]["success"]
     await ctx.respond(responses.get(str(ctx.interaction.locale), responses["en-US"]))
 
