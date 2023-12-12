@@ -16,7 +16,12 @@
         },
         "channel_error": {
             "en-US": "It's not possible to create a podium in this channel 😥!",
-            "fr": "Il est impossible de créer le podium dans ce channel 😥 !"},
+            "fr": "Il est impossible de créer le podium dans ce channel 😥 !"
+        },
+        "no_access": {
+            "en-US": "I don't have access to this channel 🔐!",
+            "fr": "Je n'ai pas accès à ce channel 🔐 !"
+        },
         "already_exists": {
             "en-US": "The podium is already created in {channel}",
             "fr": "Le podium est déjà créé dans {channel}"

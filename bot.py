@@ -189,10 +189,23 @@ async def on_raw_reaction_remove(reaction: discord.RawReactionActionEvent):
                 description_localizations=loc["create_podium"]["option"]["description"],
                 min_value=1,max_value=10, default=3)
 async def set_podium(ctx: discord.ApplicationContext, size: int):
-    if not ctx.channel or not ctx.guild_id:
+    if not ctx.channel or not ctx.guild_id or not ctx.guild:
         return
+
     if isinstance(ctx.channel, discord.PartialMessageable):
         responses = loc["create_podium"]["channel_error"]
+        await ctx.respond(responses.get(str(ctx.interaction.locale), responses["en-US"]))
+        return
+    
+    if not bot.user or not ctx.guild.get_member(bot.user.id):
+        return # Not in guild ?
+    
+    bot_member = ctx.guild.get_member(bot.user.id)
+    if not bot_member:
+        return # Still not a member of the guild
+ 
+    if not ctx.channel.permissions_for(bot_member).is_superset(bot_member.roles[1].permissions):
+        responses = loc["create_podium"]["no_access"]
         await ctx.respond(responses.get(str(ctx.interaction.locale), responses["en-US"]))
         return
     
